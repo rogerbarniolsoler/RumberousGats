@@ -8,7 +8,7 @@ export default function App() {
 
   const fetchCats = async () => {
     try {
-      const response = await fetch('https://api.thecatapi.com/v1/images/search?limit=50&has_breeds=1', {
+      const response = await fetch('https://api.thecatapi.com/v1/images/search?limit=10&has_breeds=1', {
         headers: {
           'x-api-key': process.env.EXPO_PUBLIC_CAT_API_KEY,
         }
@@ -16,7 +16,6 @@ export default function App() {
       
       const data = await response.json();
       
-      // Processem les dades per guardar només el que necessitem
       const formattedCats = data.map(cat => {
         const breedInfo = cat.breeds && cat.breeds.length > 0 ? cat.breeds[0] : {};
         return {
