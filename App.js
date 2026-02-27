@@ -15,7 +15,21 @@ export default function App() {
       });
       
       const data = await response.json();
-      setCats(data);
+      
+      // Processem les dades per guardar només el que necessitem
+      const formattedCats = data.map(cat => {
+        const breedInfo = cat.breeds && cat.breeds.length > 0 ? cat.breeds[0] : {};
+        return {
+          id: cat.id,
+          imageUrl: cat.url,
+          name: breedInfo.name || "Gat misteriós",
+          intelligence: breedInfo.intelligence || 0,
+          affectionLevel: breedInfo.affection_level || 0,
+          dogFriendly: breedInfo.dog_friendly || 0
+        };
+      });
+
+      setCats(formattedCats);
       setLoading(false);
     } catch (error) {
       console.error("Error descarregant els gats:", error);
@@ -50,12 +64,10 @@ export default function App() {
           renderItem={({ item }) => (
             <View style={styles.card}>
               <Image 
-                source={{ uri: item.url }} 
+                source={{ uri: item.imageUrl }} 
                 style={styles.catImage} 
               />
-              <Text style={styles.catName}>
-                {item.breeds && item.breeds.length > 0 ? item.breeds[0].name : "Gat misteriós"}
-              </Text>
+              <Text style={styles.catName}>{item.name}</Text>
             </View>
           )}
         />
@@ -76,7 +88,6 @@ const styles = StyleSheet.create({
   },
   header: {
     paddingVertical: 10,
-    //backgroundColor: 'white',
     alignItems: 'center',
     borderBottomWidth: 0.5,
     borderBottomColor: '#afafaf',
@@ -94,6 +105,8 @@ const styles = StyleSheet.create({
   catImage: {
     width: '100%',
     height: 200,
+    borderTopLeftRadius: 10,
+    borderTopRightRadius: 10,
   },
   catName: {
     fontSize: 16,
