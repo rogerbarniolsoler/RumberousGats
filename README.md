@@ -28,8 +28,8 @@ Per poder provar aquesta aplicació al teu entorn local, segueix aquests passos:
 
 **2. Instal·lació:**
 Clona aquest repositori al teu ordinador i, des de la terminal, accedeix a la carpeta del projecte per instal·lar les dependències:
-npm install
-npx expo start
+- npm install
+- npx expo start
 
 
-## Gaudeix dels 🐾 Rumberous Cats
+***Gaudeix dels 🐾 Rumberous Cats***
