@@ -10,13 +10,25 @@ S'ha triat aquesta temàtica perquè permet complir a la perfecció amb els requ
 - Gestió i tractament d'imatges remotes (URLs).
 - Consum d'una API RESTful real externa ([The Cat API](https://thecatapi.com/)).
 
-## 📱 Funcionament de l'App
-L'aplicació és senzilla però molt interactiva, demostrant el domini dels components bàsics (`View`, `Text`, `Image`, `FlatList`, `Pressable`):
+## 📱 Funcionament de l'App (v2)
+L'aplicació ha evolucionat d'un catàleg estàtic a una experiència multimodal i animada, integrant les següents funcionalitats:
 
-1. **Catàleg Principal:** En obrir l'aplicació, es fa una crida a l'API per obtenir una llista aleatòria de gats amb informació de la seva raça. Aquests es mostren en format de targetes (*Cards*).
-2. **Targetes Desplegables:** Cada targeta té un botó amb una fletxa a la part inferior dreta. En clicar-lo (amb feedback visual gràcies al component `Pressable`), la targeta es desplega per mostrar estadístiques detallades de la raça (Intel·ligència, Afecte i Amigabilitat amb gossos).
-3. **Botó de Recàrrega (FAB):** A la part inferior dreta de la pantalla hi ha un "Floating Action Button". En prémer-lo, es fa una nova petició a l'API i es recarrega la pantalla amb una nova llista de gats rumberos.
-4. **Interfície Segura:** S'ha utilitzat la llibreria `react-native-safe-area-context` per garantir que el disseny s'adapta perfectament al "Safe Area" dels dispositius moderns (evitant el notch o la barra d'estat), tant a iOS com a Android.
+### 1. Navegació i Arquitectura
+* **Expo Router:** S'ha implementat una estructura de navegació basada en carpetes amb **Tabs** inferiors (Home, Likes i Perfil).
+* **Vistes en Stack:** Ús de sistemes de pila per gestionar la transició entre la llista i el detall.
+
+### 2. Detall en Modal i Shared Element Transition
+* **Modal Natiu:** En clicar una targeta, s'obre una vista de detall en format modal que puja de baix a dalt.
+* **Shared Element Transition:** La imatge del gat realitza una transició fluida (vola) de la llista al detall, garantint una continuïtat visual de "Motion Design".
+
+### 3. Sistema de "Likes" amb Context API
+* **Persistència Global:** S'ha utilitzat **React Context** per gestionar els gats preferits de forma global sense dependre de bases de dades externes.
+* **Feedback Visual:** El botó del cor inclou una animació suau de tipus "pop" (batec ràpid) utilitzant `withSequence` per confirmar l'acció a l'usuari.
+
+### 4. Experiència Multimodal: Gestos i Música
+* **Long Press Gesture:** En mantenir premuda una targeta, s'activa un gest complex (Gesture Handler) que reprodueix en bucle la cançó *"Gat Rumbero"* de La Pegatina.
+* **Animació Bategant:** Mentre el so està actiu, la targeta realitza una animació d'escala infinita (`withRepeat`), sincronitzant la resposta visual amb l'àudio.
+* **Threading:** S'ha utilitzat `runOnJS` per garantir que la reproducció multimèdia no bloquegi el fil d'animacions de la UI.
 
 ## 🚀 Com executar l'aplicació
 
